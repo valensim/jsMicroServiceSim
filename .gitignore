@@ -1,0 +1,19 @@
+# Node modules
+node_modules/
+
+# local burner stuff
+local/
+
+# JetBrains IDEs
+.idea/
+
+# Logs
+*.log
+
+# Optional npm lockfile if using yarn, otherwise ignore yarn.lock
+yarn.lock
+
+# Ignore any build or cache directories, or IDE config files you don’t want
+.DS_Store
+*.swp
+
