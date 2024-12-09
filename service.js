@@ -10,6 +10,20 @@ import {
 import {v4 as uuidv4} from 'uuid';
 import {default as axios} from 'axios';
 
+export async function getRuns(name, namespace) {
+  //  url: 'http://localhost:5000/api/v1/namespaces/:namespace/jobs/:job/runs',
+  let config = {
+	method: 'get',
+	maxBodyLength: Infinity,
+	url: `http://localhost:8080/api/v1/namespaces/${namespace}/jobs/${name}/runs`,
+	headers: {
+	  'Accept': 'application/json'
+	}
+  };
+
+  return await axios(config);
+}
+
 class Service {
   constructor(jobName, jobNamespace, producer, schemaURL, inputs, outputs) {
 	this.jobName = jobName;
@@ -23,31 +37,21 @@ class Service {
 	this.run = new RunBuilder().setRunId(this.runId).build();
   }
 
-  getJobName() {
-	return this.jobName;
-  }
-  getRunId(name, namespace) {
-	//  url: 'http://localhost:5000/api/v1/namespaces/:namespace/jobs/:job/runs',
-	let config = {
-	  method: 'get',
-	  maxBodyLength: Infinity,
-	  url: `http://localhost:8080/api/v1/namespaces/${namespace}/jobs/${name}/runs`,
-	  headers: {
-		'Accept': 'application/json'
-	  }
-	};
-
-	axios(config)
-	.then((response) => {
-	  console.log(JSON.stringify(response.data));
-	})
-	.catch((error) => {
-	  console.log(error);
-	});
+  async getLastRun() {
+	let response = await getRuns(this.jobName, this.jobNamespace);
+	console.log('Runs:', response.data);
+	return response.data.runs[0];
   }
 
-  getLastRun() {
-	this.getRunId(this.jobName, this.jobNamespace)
+  async beLastRun() {
+	const lastRun = await this.getLastRun();
+	if (lastRun) {
+	  this.runId = lastRun.id;
+	  this.run = new RunBuilder().setRunId(this.runId).build();
+	  console.log('Last runId:', this.runId);
+	} else {
+	  console.log('No previous runs.');
+	}
   }
 
   startJob() {

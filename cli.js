@@ -36,7 +36,7 @@ rl.on('line', (input) => {
   let job = jobs.find((job) => job.jobName === jobName);
   switch (command) {
 	case 'latest':
-	  job.getLastRun();
+	  job.beLastRun();
 	  break;
 	case 'start':
 	  job.startJob();
@@ -46,7 +46,6 @@ rl.on('line', (input) => {
 	  break;
 	case 'end':
 	  job.endJob();
-	  rl.close();
 	  break;
 	default:
 	  console.log('Unknown command. Use start, running, or end.');
