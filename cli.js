@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import readline from 'readline';
-import {s3, kafka, rabbit, elastic} from "./datasets.js";
+import {s3, kafka, rabbit, elastic, kinesis, dynamo} from "./datasets.js";
 import {Service} from "./service.js";
 
 const rl = readline.createInterface({
@@ -13,9 +13,10 @@ const producer = 'https://github.com/valensim/OpenLineageJSClient';
 const schemaURL = 'https://github.com/valensim/OpenLineageJSClient';
 
 // create  a list of the services match them based on the jobName and then call them in the switch
-let replication = new Service('replication', 'replicationNamespace', producer, schemaURL, [s3], [rabbit, elastic]);
-let fetching = new Service('fetching', 'fetchingNamespace', producer, schemaURL, [kafka], [s3]);
-let jobs = [replication, fetching];
+let replication = new Service('replication', 'replicationNamespace', producer, schemaURL, [dynamo], [s3, rabbit, elastic]);
+let fetching = new Service('fetching', 'fetchingNamespace', producer, schemaURL, [kafka], [dynamo]);
+let enrichment = new Service('enrichment', 'enrichmentNamespace', producer, schemaURL, [kinesis, dynamo], [dynamo]);
+let jobs = [replication, fetching, enrichment];
 let names = jobs.map((job) => job.jobName);
 
 console.log('Enter a name of the service (' + names + ') and a command (start, running, end, latest):');

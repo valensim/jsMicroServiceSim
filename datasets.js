@@ -1,8 +1,10 @@
 import {InputDatasetBuilder} from "open-lineage-client-js";
 
-let kafka = new InputDatasetBuilder().setName('Kafka').setNamespace('kafkaNamespace').build();
-let s3 = new InputDatasetBuilder().setName('S3').setNamespace('s3Namespace').build();
-let rabbit = new InputDatasetBuilder().setName('rabbit').setNamespace('rabbitNamespace').build();
-let elastic = new InputDatasetBuilder().setName('elastic').setNamespace('elasticNamespace').build();
+let kafka = new InputDatasetBuilder().setName('Kafka_topic').setNamespace('kafka_host').build();
+let kinesis = new InputDatasetBuilder().setName('Kinesis_Stream').setNamespace('Kinesis_Region').build();
+let s3 = new InputDatasetBuilder().setName('S3_path').setNamespace('S3_bucket_and_region').build();
+let rabbit = new InputDatasetBuilder().setName('rabbit').setNamespace('rabbit_namespace').build();
+let elastic = new InputDatasetBuilder().setName('elastic_index_pattern').setNamespace('elastic_host').build();
+let dynamo = new InputDatasetBuilder().setName('Dynamo_Table').setNamespace('Dynamo_Region').build();
 
-export {kafka, s3, rabbit, elastic};
+export {kinesis, kafka, s3, rabbit, elastic, dynamo};
