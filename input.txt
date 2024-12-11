@@ -1,0 +1,11 @@
+transform start
+saver start
+analysis start
+replication start
+enrichment start
+transform running
+saver running
+replication running
+enrichment running
+analysis end
+exit
