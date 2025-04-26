@@ -19,8 +19,8 @@ const schemaURL = 'https://github.com/valensim/OpenLineageJSClient';
 
 // create  a list of the services match them based on the jobName and then call them in the switch
 let transform = new Service('transform', 'transformNamespace', producer, schemaURL, [kinesis], [dynamo]);
-let saver = new Service('saver', 'saverNamespace', producer, schemaURL, [kafka, api], [dynamo, rabbit]);
-let analysis = new Service('analysis', 'analysisNamespace', producer, schemaURL, [s3], [postgres, s3]);
+let saver = new Service('saver', 'saverNamespace', producer, schemaURL, [kafka, api], [dynamo, rabbit, s3]);
+let analysis = new Service('analysis', 'analysisNamespace', producer, schemaURL, [s3], [s3]);
 let replication = new Service('replication', 'replicationNamespace', producer, schemaURL, [dynamo], [s3, elastic]);
 let enrichment = new Service('enrichment', 'enrichmentNamespace', producer, schemaURL, [rabbit], [kinesis]);
 let jobs = [replication, saver, enrichment, transform, analysis];

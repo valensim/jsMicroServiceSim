@@ -6,7 +6,7 @@ import {
   OpenLineageClient,
   RunBuilder,
   RunEventBuilder
-} from "open-lineage-client-js";
+} from "open-lineage-client";
 import {v4 as uuidv4} from 'uuid';
 import {default as axios} from 'axios';
 
@@ -33,7 +33,8 @@ class Service {
 	this.runId = uuidv4();
 	this.producer = producer;
 	this.schemaURL = schemaURL;
-	this.client = new OpenLineageClient(producer);
+	this.client = new OpenLineageClient();
+	console.log(this.client);
 	this.run = new RunBuilder().setRunId(this.runId).build();
   }
 
